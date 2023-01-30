@@ -7,9 +7,14 @@
 
 import Foundation
 
+protocol ErrorDelegate: AnyObject {
+    func onError()
+}
+
 final class PokemonListViewModel {
     private let service: PokemonServicing
     var pokedex: Pokedex = Pokedex(id: 0, name: "", pokemon_entries: [])
+    weak var errorDelegate: ErrorDelegate?
     
     init(service: PokemonServicing = PokemonService()) {
         self.service = service
@@ -22,8 +27,8 @@ final class PokemonListViewModel {
             switch result {
             case .success(let pokedex):
                 self.pokedex = pokedex
-            case .failure(let pokemonError):
-                // tratar erro
+            case .failure(_):
+                self.errorDelegate?.onError()
                 break
             }
         })

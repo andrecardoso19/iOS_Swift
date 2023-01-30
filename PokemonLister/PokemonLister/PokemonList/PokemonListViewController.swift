@@ -21,6 +21,7 @@ class PokemonListViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
         self.setupView()
         self.view = pokemonListView
+        self.viewModel.errorDelegate = self
         self.viewModel.getPokemonList()
     }
     
@@ -39,5 +40,21 @@ class PokemonListViewController: UIViewController {
         let vc = PokedexListViewController(viewModel: self.viewModel)
         self.navigationController?.pushViewController(vc, animated: true)
     }
+    
+    private func showAlert() {
+        let alert = UIAlertController(title: "Error", message: "Houve um erro ao carregar informações", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
+        
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            self.present(alert, animated: true, completion: nil)
+        }
+        
+    }
 }
 
+extension PokemonListViewController: ErrorDelegate {
+    func onError() {
+        self.showAlert()
+    }
+}
