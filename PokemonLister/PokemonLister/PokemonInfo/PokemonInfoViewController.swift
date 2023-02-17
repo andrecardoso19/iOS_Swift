@@ -10,17 +10,12 @@ import UIKit
 
 final class PokemonInfoViewController: UIViewController {
     private let viewModel: PokemonInfoViewModeling
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view.
-    }
+    private let pokemonInfoView = PokemonInfoView()
 
     init(viewModel: PokemonInfoViewModeling = PokemonInfoViewModel(pokemonUrl: "")) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
-        print(self.viewModel.pokemonUrl)
-//        self.setupView()
+        self.view = pokemonInfoView
     }
     
     @available(*, unavailable)

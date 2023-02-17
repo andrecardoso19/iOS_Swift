@@ -8,7 +8,6 @@
 import Foundation
 
 protocol PokemonListViewModelDelegate: AnyObject {
-    func onSuccess()
     func onError(error: PokedexError)
 }
 
@@ -37,7 +36,6 @@ final class PokemonListViewModel: PokemonListViewModeling {
                 switch result {
                 case .success(let pokedex):
                     self.pokedex = pokedex
-                    self.delegate?.onSuccess()
                 case .failure(let error):
                     self.delegate?.onError(error: error)
                 }

@@ -46,9 +46,6 @@ final class PokemonListViewController: UIViewController {
 }
 
 extension PokemonListViewController: PokemonListViewModelDelegate {
-    func onSuccess() {
-        
-    }
     
     func onError(error: PokedexError) {
         self.showAlert(error: error)

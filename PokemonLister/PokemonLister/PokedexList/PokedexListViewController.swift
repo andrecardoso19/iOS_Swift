@@ -12,11 +12,6 @@ final class PokedexListViewController: UIViewController {
     private let viewModel: PokedexListViewModeling
     private var tableView = UITableView(frame: .zero, style: .grouped)
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view.
-    }
-    
     init(viewModel: PokedexListViewModeling = PokedexListViewModel()) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)

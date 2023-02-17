@@ -35,6 +35,7 @@ final class PokedexListTableViewCell: UITableViewCell {
         setupLayoutConstraints()
     }
     
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
