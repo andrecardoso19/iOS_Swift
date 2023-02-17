@@ -7,14 +7,22 @@
 
 import Foundation
 
-protocol ErrorDelegate: AnyObject {
-    func onError()
+protocol PokemonListViewModelDelegate: AnyObject {
+    func onSuccess()
+    func onError(error: PokedexError)
 }
 
-final class PokemonListViewModel {
+protocol PokemonListViewModeling {
+    var delegate: PokemonListViewModelDelegate? { get set }
+    var pokedex: Pokedex { get }
+    func getPokemonList()
+}
+
+final class PokemonListViewModel: PokemonListViewModeling {
     private let service: PokemonServicing
-    var pokedex: Pokedex = Pokedex(id: 0, name: "", pokemon_entries: [])
-    weak var errorDelegate: ErrorDelegate?
+    // setado internamente, mas visualizado externamente(get)
+    private(set) var pokedex: Pokedex = Pokedex(id: 0, name: "", pokemon_entries: [])
+    weak var delegate: PokemonListViewModelDelegate?
     
     init(service: PokemonServicing = PokemonService()) {
         self.service = service
@@ -22,16 +30,18 @@ final class PokemonListViewModel {
     
     func getPokemonList(){
         service.fetchPokemonList(completion: { [weak self] result in
-            guard let self = self else { return }
-            
-            switch result {
-            case .success(let pokedex):
-                self.pokedex = pokedex
-            case .failure(_):
-                self.errorDelegate?.onError()
-                break
+            // dispatchqueue.main pra mandar o success ou failure pra main thread(realizar ajuste visual)
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
+                
+                switch result {
+                case .success(let pokedex):
+                    self.pokedex = pokedex
+                    self.delegate?.onSuccess()
+                case .failure(let error):
+                    self.delegate?.onError(error: error)
+                }
             }
         })
-        
     }
 }

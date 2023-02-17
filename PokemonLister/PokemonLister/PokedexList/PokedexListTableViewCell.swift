@@ -40,8 +40,11 @@ final class PokedexListTableViewCell: UITableViewCell {
     }
     
     func setupView(entryNumber: String, pokemonName: String) {
+        let firstLetter = pokemonName.prefix(1).capitalized
+        let otherLetters = pokemonName.dropFirst().lowercased()
+        
         entryNumberLabel.text = entryNumber
-        pokemonNameLabel.text = pokemonName
+        pokemonNameLabel.text = "\(firstLetter)\(otherLetters)"
     }
     
     private func setupSubviews() {
@@ -52,8 +55,8 @@ final class PokedexListTableViewCell: UITableViewCell {
     private func setupLayoutConstraints() {
         NSLayoutConstraint.activate([
             entryNumberLabel.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor),
-            entryNumberLabel.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 20),
-            entryNumberLabel.widthAnchor.constraint(equalToConstant: 50),
+            entryNumberLabel.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 40),
+            entryNumberLabel.widthAnchor.constraint(equalToConstant: 60),
             
             pokemonNameLabel.leadingAnchor.constraint(equalTo: entryNumberLabel.trailingAnchor),
             pokemonNameLabel.centerYAnchor.constraint(equalTo: entryNumberLabel.centerYAnchor)

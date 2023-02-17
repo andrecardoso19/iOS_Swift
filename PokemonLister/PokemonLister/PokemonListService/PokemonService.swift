@@ -48,7 +48,7 @@ final class PokemonService: PokemonServicing {
             } catch  {
                 // tratar erro de decode
                 // catch fornece esse "error"
-                return completion(.failure(.decodeError(message: error.localizedDescription)))
+                return completion(.failure(.decodeError(message: "Erro ao processar informações: \(error.localizedDescription)")))
             }
         }
         
@@ -61,4 +61,19 @@ enum PokedexError: Error {
     case httpError
     case dataError
     case decodeError(message: String)
+    
+    var message: String {
+        let message: String
+        switch self {
+        case .requestError(_):
+            message = "Erro de chamada, tente novamente"
+        case .httpError:
+            message = "Erro de retorno, tente novamente"
+        case .dataError:
+            message = "Erro ao receber dados, tente novamente"
+        case .decodeError(let errorDescription):
+            message = errorDescription
+        }
+        return message
+    }
 }

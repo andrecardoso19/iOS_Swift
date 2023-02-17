@@ -9,15 +9,15 @@ import Foundation
 import UIKit
 
 final class PokedexListViewController: UIViewController {
-    let viewModel: PokemonListViewModel
-    var tableView = UITableView(frame: .zero, style: .grouped)
+    private let viewModel: PokedexListViewModeling
+    private var tableView = UITableView(frame: .zero, style: .grouped)
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
     }
     
-    init(viewModel: PokemonListViewModel = PokemonListViewModel()) {
+    init(viewModel: PokedexListViewModeling = PokedexListViewModel()) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
         self.title = "Kanto Pokédex"
@@ -25,6 +25,7 @@ final class PokedexListViewController: UIViewController {
         setupTableView()
     }
     
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -53,6 +54,7 @@ extension PokedexListViewController: UITableViewDelegate, UITableViewDataSource 
             return UITableViewCell()
             
         }
+        
         let cellInfo = viewModel.pokedex
         
         cell.setupView(entryNumber: "\(cellInfo.pokemon_entries[indexPath.row].entry_number)", pokemonName: cellInfo.pokemon_entries[indexPath.row].pokemon_species.name)
@@ -65,7 +67,7 @@ extension PokedexListViewController: UITableViewDelegate, UITableViewDataSource 
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let vc = PokemonInfoViewController(pokemonUrl: viewModel.pokedex.pokemon_entries[indexPath.row].pokemon_species.url)
+        let vc = PokemonInfoViewController(viewModel: PokemonInfoViewModel(pokemonUrl: viewModel.pokedex.pokemon_entries[indexPath.row].pokemon_species.url))
         self.navigationController?.pushViewController(vc, animated: true)
     }
 }

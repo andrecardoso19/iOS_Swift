@@ -8,22 +8,22 @@
 import Foundation
 import UIKit
 
-class PokemonInfoViewController: UIViewController {
-    let viewModel: PokemonInfoViewModel
+final class PokemonInfoViewController: UIViewController {
+    private let viewModel: PokemonInfoViewModeling
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
     }
 
-    init(viewModel: PokemonInfoViewModel = PokemonInfoViewModel(pokemonUrl: ""), pokemonUrl: String) {
+    init(viewModel: PokemonInfoViewModeling = PokemonInfoViewModel(pokemonUrl: "")) {
         self.viewModel = viewModel
-        self.viewModel.pokemonUrl = pokemonUrl
         super.init(nibName: nil, bundle: nil)
         print(self.viewModel.pokemonUrl)
 //        self.setupView()
     }
     
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

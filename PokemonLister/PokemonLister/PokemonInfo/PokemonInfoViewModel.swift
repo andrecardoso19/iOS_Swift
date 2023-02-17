@@ -7,9 +7,13 @@
 
 import Foundation
 
-final class PokemonInfoViewModel {
+protocol PokemonInfoViewModeling {
+    var pokemonUrl: String { get }
+}
+
+final class PokemonInfoViewModel: PokemonInfoViewModeling {
     private let service: PokemonServicing
-    var pokemonUrl: String
+    private(set) var pokemonUrl: String
     
     init(service: PokemonServicing = PokemonService(), pokemonUrl: String) {
         self.service = service
