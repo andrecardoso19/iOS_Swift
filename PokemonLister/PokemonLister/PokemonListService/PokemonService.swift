@@ -10,6 +10,7 @@ import Foundation
 protocol PokemonServicing {
     // Result é um enum contendo success(Success) e failure(Failure), dentro de success pode ter uma variável de qualquer tipo e no failure tem que herdar o protocolo Error
     func fetchPokemonList(completion: @escaping (Result<Pokedex, PokedexError>) -> Void)
+    func getPokemonImage(url: String, completion: @escaping (Result<Data, PokedexError>) -> Void)
 }
 
 final class PokemonService: PokemonServicing {
@@ -53,6 +54,16 @@ final class PokemonService: PokemonServicing {
         }
         
         task.resume()
+    }
+    
+    func getPokemonImage(url: String, completion: @escaping (Result<Data, PokedexError>) -> Void) {
+        guard let url = URL(string: url) else { return }
+        
+        if let data = try? Data(contentsOf: url) {
+            return completion(.success(data))
+        } else {
+            return completion(.failure(.dataError))
+        }
     }
 }
 

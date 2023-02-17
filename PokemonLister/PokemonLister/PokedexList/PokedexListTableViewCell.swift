@@ -44,7 +44,7 @@ final class PokedexListTableViewCell: UITableViewCell {
         let firstLetter = pokemonName.prefix(1).capitalized
         let otherLetters = pokemonName.dropFirst().lowercased()
         
-        entryNumberLabel.text = entryNumber
+        entryNumberLabel.text = "#\(entryNumber)"
         pokemonNameLabel.text = "\(firstLetter)\(otherLetters)"
     }
     
