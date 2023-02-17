@@ -62,7 +62,7 @@ extension PokedexListViewController: UITableViewDelegate, UITableViewDataSource 
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let vc = PokemonInfoViewController(viewModel: PokemonInfoViewModel(pokemonUrl: viewModel.pokedex.pokemon_entries[indexPath.row].pokemon_species.url))
+        let vc = PokemonInfoViewController(viewModel: PokemonInfoViewModel(pokemonNumber: "\(viewModel.pokedex.pokemon_entries[indexPath.row].entry_number)"))
         self.navigationController?.pushViewController(vc, animated: true)
     }
 }
